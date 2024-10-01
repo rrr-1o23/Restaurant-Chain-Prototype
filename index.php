@@ -10,17 +10,52 @@ require_once 'vendor/autoload.php';
 
 
 // クエリ文字列からパラメータを取得
-$min = $_GET['min'] ?? 5;
-$max = $_GET['max'] ?? 5;
+$min = 5;
+$max = $_POST['employeeCount'] ?? 5;
+
+$locationCount = $_POST['locationCount'] ?? 2;
+
+$format = $_POST['format'] ?? 'html';
 
 // パラメータが整数であることを確認
-$min = (int)$min;
 $max = (int)$max;
+$locationCount = (int)$locationCount;
+
 
 // ユーザーの生成
 $employees = Helpers\RandomGenerator::employees($min, $max);
-$restaurantLocations = Helpers\RandomGenerator::restaurantLocations($min, $max);
-$restaurantChains = Helpers\RandomGenerator::restaurantChains($min, $max);
+$restaurantLocations = Helpers\RandomGenerator::restaurantLocations($min, $max, $locationCount);
+$restaurantChains = Helpers\RandomGenerator::restaurantChains($min, $max, $locationCount);
+
+
+if ($format === 'markdown') {
+    header('Content-Type: text/markdown');
+    header('Content-Disposition: attachment; filename="users.md"');
+    foreach ($restaurantChains as $restaurantChain) {
+        echo $restaurantChain->toMarkdown();
+    }
+    exit; // スクリプト終了
+
+} elseif ($format === 'json') {
+    header('Content-Type: application/json');
+    header('Content-Disposition: attachment; filename="users.json"');
+    $chainsArray = array_map(fn($restaurantChain) => $restaurantChain->toArray(), $restaurantChains);
+    echo json_encode($chainsArray);
+    exit; // スクリプト終了
+
+} elseif ($format === 'txt') {
+    header('Content-Type: text/plain');
+    header('Content-Disposition: attachment; filename="users.txt"');
+    foreach ($restaurantChains as $restaurantChain) {
+        echo $restaurantChain->toString();
+    }
+    exit; // スクリプト終了
+
+} else {
+    // HTMLをデフォルトに
+    header('Content-Type: text/html');
+}
+
 ?>
 
 <!DOCTYPE html>
