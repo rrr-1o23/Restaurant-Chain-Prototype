@@ -1,5 +1,7 @@
 # Restaurant Chain Prototype
 
+[サイトURL](https://userlorem.ryosuke-tech.com)
+
 <div style="text-align: center">
     <img src="./images/restaurant-chain-prototype.jpeg" width="100%">
 </div>
@@ -40,14 +42,6 @@ FileConvertibleは、オブジェクトが自分自身を文字列、HTML、マ�
 
 <!--ユーザーはHTMLフォームを介して、従業員数、範囲、場所を選択し、モックデータをHTML、JSON、TXT、マークダウンのいずれかの形式でダウンロードすることができます-->
 &nbsp;
-
-### 実行方法
-1. Clone from Git
- ```shell
- php -S localhost:8000
-```
-2. Access in Browser.
-
 
 ### クラス図
 - Employee クラス（User クラスを拡張）

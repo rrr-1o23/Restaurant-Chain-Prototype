@@ -1,32 +1,44 @@
 <?php
 // コードベースのファイルのオートロード
 spl_autoload_extensions(".php"); 
-spl_autoload_register();
+spl_autoload_register(function ($class) {
+    // 名前空間を基にファイルパスを作成
+    $file = __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
 
 // composerの依存関係のオートロード
 require_once 'vendor/autoload.php';
-#require_once 'Models/Users/User.php';
-#require_once 'Helpers/RandomGenerator.php';
+//require_once 'Models/Users/User.php';
+//require_once 'Helpers/RandomGenerator.php';
 
+
+// 変数の初期化
+$employees = [];
+$restaurantLocations = [];
+$restaurantChains = [];
 
 // クエリ文字列からパラメータを取得
 $min = 5;
 $max = $_POST['employeeCount'] ?? 5;
-
 $locationCount = $_POST['locationCount'] ?? 2;
-
 $format = $_POST['format'] ?? 'html';
 
 // パラメータが整数であることを確認
 $max = (int)$max;
 $locationCount = (int)$locationCount;
 
-
 // ユーザーの生成
-$employees = Helpers\RandomGenerator::employees($min, $max);
-$restaurantLocations = Helpers\RandomGenerator::restaurantLocations($min, $max, $locationCount);
-$restaurantChains = Helpers\RandomGenerator::restaurantChains($min, $max, $locationCount);
-
+try {
+    $employees = Helpers\RandomGenerator::employees($min, $max);
+    $restaurantLocations = Helpers\RandomGenerator::restaurantLocations($min, $max, $locationCount);
+    $restaurantChains = Helpers\RandomGenerator::restaurantChains($min, $max, $locationCount);
+} catch (Exception $e) {
+    error_log("Error generating employees: " . $e->getMessage());
+    die("Error generating employees. Please try again.");
+}
 
 if ($format === 'markdown') {
     header('Content-Type: text/markdown');
