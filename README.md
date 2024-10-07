@@ -3,7 +3,7 @@
 [サイトURL](https://userlorem.ryosuke-tech.com)
 
 <div style="text-align: center">
-    <img src="./images/restaurant-chain-prototype.jpeg" width="100%">
+    <img src="./public/images/restaurant-chain-prototype.jpeg" width="100%">
 </div>
 
 ### 使用技術
