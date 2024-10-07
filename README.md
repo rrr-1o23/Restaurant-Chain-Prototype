@@ -1,12 +1,12 @@
 # Restaurant Chain Prototype
 
-[サイトURL](https://userlorem.ryosuke-tech.com)
+### [サイトURL](https://userlorem.ryosuke-tech.com)
 
 <div style="text-align: center">
     <img src="./public/images/restaurant-chain-prototype.jpeg" width="100%">
 </div>
 
-### 使用技術
+## 使用技術
 **フロントエンド**
 <p style="display: inline">
 <img src="https://img.shields.io/badge/-HTML5-FFFFFF.svg?logo=html5&style=popout">
